@@ -5,7 +5,7 @@ module.exports = {
         failureMessage: 'Build Failed'
     },
     telegram: {
-        botToken: '472274872:AAGmoXpD2mTdQpwGCCzdgKzyun7O8OzNkKI' || throwErr(),
+        botToken: process.env.BOT_TOKEN || throwErr(),
         channelUsername: 'netlify_zapcircle'
     }
 }
