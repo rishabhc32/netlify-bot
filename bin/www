@@ -7,15 +7,18 @@
 var app = require('../app');
 var debug = require('debug')('netlify-bot:server');
 var http = require('http');
-var dotenv = require('dotenv')
 
-/** 
- * Load env variables
- */
-const result = dotenv.load()
+if(process.env.NODE_ENV === 'development') {
+    var dotenv = require('dotenv')
 
-if(result.error)
-    throw result.error
+    /** 
+    * Load env variables
+    */
+    const result = dotenv.load()
+
+    if(result.error)
+        throw result.error
+}
 
 /**
  * Get port from environment and store in Express.
