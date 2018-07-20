@@ -2,7 +2,8 @@ var createError = require('http-errors');
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var debug = require('debug')('app:wrongClient')
+var helmet = require('helmet');
+var debug = require('debug')('app:wrongClient');
 
 var buildStatusRouter = require('./routes/netlify_build');
 
@@ -12,6 +13,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(helmet());
 
 app.use('/netlify_build', buildStatusRouter);
 
