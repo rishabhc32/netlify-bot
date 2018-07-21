@@ -6,6 +6,7 @@ var helmet = require('helmet');
 var debug = require('debug')('app:wrongClient');
 
 var buildStatusRouter = require('./routes/netlify_build');
+var telegramWebhook = require('./routes/telegram_webhook');
 
 var app = express();
 
@@ -16,6 +17,7 @@ app.use(cookieParser());
 app.use(helmet());
 
 app.use('/netlify_build', buildStatusRouter);
+app.use('/telegram_webhook', telegramWebhook);
 
 app.use(function(req, res, next) {
     if(res.locals.wrongClient) {
