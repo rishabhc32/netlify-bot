@@ -6,7 +6,7 @@ const axiosDebug = require('debug')('axiosBuildTrigger')
 const {telegram, triggerBuildMessage} = require('../config')
 const {netlifyBuildToken} = require('../config')
 
-axios.defaults.baseURL = 'https://api.netlify.com/build_hooks';
+var baseURL = 'https://api.netlify.com/build_hooks';
 
 exports.handle_webhook = (req, res, next) => {
     processTelegramMessage(req.body)
@@ -28,9 +28,10 @@ function processTelegramMessage(message) {
 function triggerBuild() {
     axios({
         method: 'post',
-        url: `/${netlifyBuildToken}`
+        url: `${baseURL}/${netlifyBuildToken}`
     })
     .then((response) => {
+        axiosDebug(`GET: ${baseURL}`)
         axiosDebug('Netlify build triggered')
     }) 
     .catch((error) => {

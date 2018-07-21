@@ -4,7 +4,7 @@ const debug = require('debug')('controller:buildController')
 const {buildMessage, telegram} = require('../config')
 const getCurrentTime = require('../helpers/getTime')
 
-axios.defaults.baseURL = 'https://api.telegram.org';
+var baseURL = 'https://api.telegram.org';
 
 exports.build_started = async (req, res, next) => {
     if(req.header('X-Netlify-Event') === 'deploy_building' ) {
@@ -47,7 +47,7 @@ function sendBuildStatus(message, time) {
 
     axios({
         method: 'get',
-        url: `/bot${telegram.botToken}/sendMessage`,
+        url: `${baseURL}/bot${telegram.botToken}/sendMessage`,
         params: {
             chat_id: `@${telegram.channelUsername}`,
             text: `${message}\n${time}`
@@ -58,7 +58,7 @@ function sendBuildStatus(message, time) {
             debug('Message sent successfully') :
             debug(`Error: ${response.data}`)
         
-        let debugMessage = `${response.config.baseURL} ${process.env.NODE_ENV === 'development' ? 
+        let debugMessage = `${baseURL} ${process.env.NODE_ENV === 'development' ? 
             response.config.url : ''} ${JSON.stringify(response.config.params)}`
             
         debug(`GET: ${debugMessage}`)
